@@ -28,7 +28,7 @@ class ClientThread(threading.Thread):
 
         # Main loop
         while self.alive:
-            data = self.csocket.recv(2048)
+            data = self.csocket.recv(1024)
             msg = data.decode("UTF-8").rstrip()
             if (not data):
                 self.repl("Your connection will be closed. Please reconnect!")
@@ -85,7 +85,7 @@ class ClientThread(threading.Thread):
     def fight(self, level):
         if self.weapon < level:
             self.repl(f"Are you sure?\r\n\r\nWith your weapon level of {self.weapon} you have a 0% success rate. (y/n): ")
-            data = self.csocket.recv(2048)
+            data = self.csocket.recv(1024)
             msg = data.decode("UTF-8").rstrip()
             if(msg == "y"):
                 quote_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), f"{level}_die.txt")
@@ -138,7 +138,7 @@ What would you like to buy? (press 0 to exit the shop):"""
         self.repl(f"################################\r\n\r\nGold: {self.gold}\r\nWeapon level: {self.weapon}")
 
     def welcome(self):
-        msg = """Welcome to Geovillage!!!
+        msg = """Welcome to GeoVillage!!!
 Unfortunately, the villagers have become attacked by gnomes.
 
 They need YOU to help take back their land!"""
