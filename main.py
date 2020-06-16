@@ -14,6 +14,7 @@ class ClientThread(threading.Thread):
         self.csocket.send(bytes("\r\n\r\n"+msg,'UTF-8'))
     # Main Function
     def run(self):
+        self.header()
         print ("Connection from : ", clientAddress)
         msg = ''
         # Main vars.. required for each con.
@@ -50,42 +51,20 @@ class ClientThread(threading.Thread):
                     self.shop_menu()
                 elif msg == "7":
                     break
+                else:
+                    self.info()
+                    self.main_menu()
             else:
                 if (msg == "1"):
-                    if self.gold >= 100:
-                        self.gold = self.gold-100
-                        self.weapon = 1
-                        self.repl("You bought a nice looking sword!")
-                    else:
-                        self.repl("You can not afford to buy this!")
+                    self.buy(100, 1, "nice looking sword")
                 elif (msg == "2"):
-                    if self.gold >= 1000:
-                        self.gold = self.gold-1000
-                        self.weapon = 3
-                        self.repl("You bought a awsome bow!")
-                    else:
-                        self.repl("You can not afford to buy this!")
+                    self.buy(1000, 3, "awsome bow")
                 elif (msg == "3"):
-                    if self.gold >= 2000:
-                        self.gold = self.gold-2000
-                        self.weapon = 5
-                        self.repl("You bought a really sharp axe!")
-                    else:
-                        self.repl("You can not afford to buy this!")
+                    self.buy(3000, 3, "really sharp axe")
                 elif (msg == "4"):
-                    if self.gold >= 10000:
-                        self.gold = self.gold-10000
-                        self.weapon = 7
-                        self.repl("You bought a old rusty missle launcher!")
-                    else:
-                        self.repl("You can not afford to buy this!")
+                    self.buy(10000, 7, "old rusty missle launcher")      
                 elif (msg == "5"):
-                    if self.gold >= 100000:
-                        self.gold = self.gold-100000
-                        self.weapon = 10
-                        self.repl("You bought a big tank!")
-                    else:
-                        self.repl("You can not afford to buy this!")
+                    self.buy(100000, 10, "big tank")
                 self.shop = False
                 self.info()
                 self.main_menu()
@@ -93,10 +72,19 @@ class ClientThread(threading.Thread):
         self.repl("Your connection will be closed. Please reconnect!")
         print("Client at ", clientAddress , " disconnected...")
 
-    #Fight something
+    # Buy something
+    def buy(self, cost, level, text):
+        if self.gold >= cost:
+            self.gold = self.gold - cost
+            self.weapon = level
+            self.repl(f"You bought a {text}!")
+        else:
+            self.repl("You can not afford to buy this!")
+
+    # Fight something
     def fight(self, level):
         if self.weapon < level:
-            self.repl(f"Are you sure? With your weapon level of {self.weapon} you have a 0\% success rate. (y/n): ")
+            self.repl(f"Are you sure?\r\n\r\nWith your weapon level of {self.weapon} you have a 0% success rate. (y/n): ")
             data = self.csocket.recv(2048)
             msg = data.decode("UTF-8").rstrip()
             if(msg == "y"):
@@ -107,6 +95,9 @@ class ClientThread(threading.Thread):
                 f.close()
                 self.repl(random.choice(lines))
                 self.alive = False
+            else:
+                self.info()
+                self.main_menu()
         else:
             if level == 10:
                 self.flag()
@@ -144,15 +135,13 @@ What would you like to buy? (press 0 to exit the shop):"""
         self.repl(msg)
 
     def info(self):
-        self.repl(f"Gold: {self.gold}\r\nWeapon level: {self.weapon}\r\n")
+        self.repl(f"################################\r\n\r\nGold: {self.gold}\r\nWeapon level: {self.weapon}")
 
     def welcome(self):
         msg = """Welcome to Geovillage!!!
 Unfortunately, the villagers have become attacked by gnomes.
 
-They need YOU to help take back their land!
-
-"""
+They need YOU to help take back their land!"""
         self.repl(msg)
     
     # Finish
@@ -161,6 +150,16 @@ They need YOU to help take back their land!
         f = open(quote_file, 'r')
         txt = f.read()
         self.repl(txt)
+
+    # Header
+    def header(self):
+        msg = """   ____         __     ___ _ _                  
+  / ___| ___  __\ \   / (_) | | __ _  __ _  ___ 
+ | |  _ / _ \/ _ \ \ / /| | | |/ _` |/ _` |/ _ \\
+ | |_| |  __/ (_) \ V / | | | | (_| | (_| |  __/
+  \____|\___|\___/ \_/  |_|_|_|\__,_|\__, |\___|
+                                     |___/      """
+        self.repl(msg)
 
 
 
