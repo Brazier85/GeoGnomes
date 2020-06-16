@@ -1,5 +1,8 @@
 You fell from a priate ship.
 Your journey is over!
 .
-The pirates captured you and feed you to the "ticking" croc!
+The pirates captured you!
+Your journey is over!
+.
+You got fed to a croc - maybe it was ticking..
 Your journey is over!

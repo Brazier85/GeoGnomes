@@ -3,3 +3,9 @@ Your journey is over!
 .
 While you went out exploring the world, you got poisond.
 Your journey is over!
+.
+You went out in the world and got lost!
+Your journey is over!
+.
+You got bitten by a snake.
+Your journey is over!
