@@ -166,7 +166,7 @@ They need YOU to help take back their land!
 
 
 LOCALHOST = "0.0.0.0"
-PORT = 80
+PORT = 8000
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 server.bind((LOCALHOST, PORT))
