@@ -4,6 +4,7 @@ import socket
 import threading
 import random
 import os
+import datetime
 
 # Main class for each connection
 # Here are all teh things for each player defined
@@ -133,7 +134,7 @@ class ClientThread(threading.Thread):
 6. Browse the shop
 7. End journey
 
->"""
+> """
         self.repl(msg)
     
     # Shop Menu
@@ -144,7 +145,7 @@ class ClientThread(threading.Thread):
 4. missle launcher (10000 gold) (level 7)
 5. tank (100000 gold) (level 10)
 
-What would you like to buy? (press 0 to exit the shop):"""
+What would you like to buy? (press 0 to exit the shop): """
         self.repl(msg)
 
     # Infos
@@ -161,12 +162,13 @@ They need YOU to help take back their land!"""
     
     # Finish
     def flag(self):
-        self.repl("Please enter your GeoCaching-Username so we can verify your success:")
+        self.repl("Please enter your Geocaching-Username\r\nso we can verify your success: ")
         data = self.csocket.recv(2048)
         msg = data.decode("UTF-8").rstrip()
         # Write Hero file
         hero_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), f"heros/{msg}.txt")
         f = open(hero_file, 'w')
+        f.write(str(datetime.datetime.now())+"\r\n")
         f.write(msg)
         f.close()
         #Read flag
