@@ -5,11 +5,14 @@ import threading
 import random
 import os
 
+# Main class for each connection
+# Here are all teh things for each player defined
 class ClientThread(threading.Thread):
     def __init__(self,clientAddress,clientsocket):
         threading.Thread.__init__(self)
         self.csocket = clientsocket
         print ("New connection added: ", clientAddress)
+    # Repl function. Used for looks ;)
     def repl(self, msg):
         self.csocket.send(bytes("\r\n\r\n"+msg,'UTF-8'))
     # Main Function
@@ -22,6 +25,8 @@ class ClientThread(threading.Thread):
         self.shop = False
         self.gold = 100
         self.weapon = 0
+
+        # First messages for the user
         self.welcome()
         self.info()
         self.main_menu()
@@ -30,10 +35,12 @@ class ClientThread(threading.Thread):
         while self.alive:
             data = self.csocket.recv(1024)
             msg = data.decode("UTF-8").rstrip()
+            # If there is something strange comming in..
             if (not data):
                 self.repl("Your connection will be closed. Please reconnect!")
                 break
             #print ("from client", msg)
+            # Main actions
             if not self.shop:
                 if (msg == "1"):
                     self.fight(10)
@@ -54,7 +61,10 @@ class ClientThread(threading.Thread):
                 else:
                     self.info()
                     self.main_menu()
-            else:
+            # If user in shop menu
+            elif self.shop:
+                # Here you can change the costs an messages for things in the shop.
+                # The shop entrys must be defined in the shop_menu
                 if (msg == "1"):
                     self.buy(100, 1, "nice looking sword")
                 elif (msg == "2"):
@@ -66,6 +76,7 @@ class ClientThread(threading.Thread):
                 elif (msg == "5"):
                     self.buy(100000, 10, "big tank")
                 self.shop = False
+                # After shopping show main menu
                 self.info()
                 self.main_menu()
         
@@ -84,6 +95,8 @@ class ClientThread(threading.Thread):
     # Fight something
     def fight(self, level):
         if self.weapon < level:
+            # At the moment we always have a percentage of 0%..
+            # this sould be changed.. if I have time to do..
             self.repl(f"Are you sure?\r\n\r\nWith your weapon level of {self.weapon} you have a 0% success rate. (y/n): ")
             data = self.csocket.recv(1024)
             msg = data.decode("UTF-8").rstrip()
@@ -134,9 +147,11 @@ class ClientThread(threading.Thread):
 What would you like to buy? (press 0 to exit the shop):"""
         self.repl(msg)
 
+    # Infos
     def info(self):
         self.repl(f"################################\r\n\r\nGold: {self.gold}\r\nWeapon level: {self.weapon}")
 
+    # Welcome Text
     def welcome(self):
         msg = """Welcome to GeoVillage!!!
 Unfortunately, the villagers have become attacked by gnomes.
