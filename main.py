@@ -24,7 +24,7 @@ class ClientThread(threading.Thread):
         self.alive = True
         self.shop = False
         self.gold = 100
-        self.weapon = 0
+        self.weapon = 10
 
         # First messages for the user
         self.welcome()
@@ -161,8 +161,17 @@ They need YOU to help take back their land!"""
     
     # Finish
     def flag(self):
-        quote_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), "flag.txt")
-        f = open(quote_file, 'r')
+        self.repl("Please enter your GeoCaching-Username so we can verify your success:")
+        data = self.csocket.recv(2048)
+        msg = data.decode("UTF-8").rstrip()
+        # Write Hero file
+        hero_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), f"heros/{msg}.txt")
+        f = open(hero_file, 'w')
+        f.write(msg)
+        f.close()
+        #Read flag
+        flag_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), "flag.txt")
+        f = open(flag_file, 'r')
         txt = f.read()
         self.repl(txt)
 
@@ -175,8 +184,6 @@ They need YOU to help take back their land!"""
   \____|\___|\___/ \_/  |_|_|_|\__,_|\__, |\___|
                                      |___/      """
         self.repl(msg)
-
-
 
 
 LOCALHOST = "0.0.0.0"
