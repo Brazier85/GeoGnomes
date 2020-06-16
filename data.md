@@ -1,17 +1,19 @@
-# Gnome game idea
+# Gnome game data
 
-## Main Menu
+## Welcome
 
-Welcome to Newlandia!!!
+Welcome to Geovillage!!!
 Unfortunately, the villagers have become attacked by gnomes.
 
 They need YOU to help take back their land!
 
 
+## Info
 
-What would you like to do?
 Gold: 100
 Weapon level: 0
+
+## Main Menu
 
 1. Defeat the gnomes (level 10)
 2. Fight a dragon (level 7)
@@ -25,10 +27,6 @@ Weapon level: 0
 
 ## Shop Menu
 
-
-Gold: 100
-Weapon level: 0
-
 1. sword (100 gold) (level 1)
 2. bow (1000 gold) (level 3)
 3. axe (2000 gold) (level 5)
@@ -38,10 +36,6 @@ Weapon level: 0
 What would you like to buy? (press 0 to exit the shop):
 
 
-# Infos
+## Fight
 
-Congrats you have returned from your journey with 10 gold
-
-What would you like to do?
-Gold: 69
-Weapon level: 1
+Congrats you have returned from your journey with xx gold
