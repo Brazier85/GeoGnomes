@@ -25,7 +25,7 @@ class ClientThread(threading.Thread):
         self.alive = True
         self.shop = False
         self.gold = 100
-        self.weapon = 10
+        self.weapon = 0
 
         # First messages for the user
         self.welcome()
@@ -102,7 +102,7 @@ class ClientThread(threading.Thread):
             data = self.csocket.recv(1024)
             msg = data.decode("UTF-8").rstrip()
             if(msg == "y"):
-                quote_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), f"{level}_die.txt")
+                quote_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), "messages" ,f"die_level_{level}.txt")
                 f = open(quote_file, 'r')
                 txt = f.read()
                 lines = txt.split('\n.\n')
