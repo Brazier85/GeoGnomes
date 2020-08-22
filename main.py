@@ -105,6 +105,7 @@ class ClientThread(threading.Thread):
         
         self.repl("Your connection will be closed. Please reconnect!")
         print("Client at ", clientAddress , " disconnected...")
+        return
 
     # Buy something
     def buy(self, cost, level, text):
