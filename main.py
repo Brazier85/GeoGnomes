@@ -93,7 +93,7 @@ class ClientThread(threading.Thread):
                 elif (msg == "2"):
                     self.buy(1000, 3, "awsome bow")
                 elif (msg == "3"):
-                    self.buy(3000, 3, "really sharp axe")
+                    self.buy(3000, 5, "really sharp axe")
                 elif (msg == "4"):
                     self.buy(10000, 7, "old rusty missle launcher")      
                 elif (msg == "5"):
